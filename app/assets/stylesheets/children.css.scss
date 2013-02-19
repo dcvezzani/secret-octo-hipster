@@ -1,0 +1,30 @@
+// Place all the styles related to the Children controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.modal.col2 {
+margin-left: -526px;
+width: 1050px;
+}
+
+.row .data-module.col2 {
+  float: left;
+  width: 47%;
+}
+
+.modal .data-module{
+  margin-left: 20px;
+}
+
+.modal.full-height .modal-body {
+  max-height: none;
+}
+
+.modal.col2 .modal-body {
+  margin-left: 20px;
+}
+
+.modal.narrow .data-module{
+  margin-left: 0;
+}
+

@@ -1,0 +1,21 @@
+#settlor_controllers .control-buttons, 
+#settlor_basic_infos .control-buttons, 
+#residential_addresses .control-buttons, 
+#contact_informations .control-buttons, 
+#mailing_addresses .control-buttons{
+  display: none; 
+}
+
+.pager .nav-btn-primary > a, 
+.pager .nav-btn-primary a {
+  background-color: #0088CC;
+  color: white;
+}
+
+.pager .nav-btn-primary > a:hover, 
+.pager .nav-btn-primary a:hover {
+  background-color: #68C2EF;
+  color: white;
+}
+
+

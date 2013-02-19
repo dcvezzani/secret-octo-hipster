@@ -1,0 +1,22 @@
+// Place all the styles related to the Questions controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.form-question_answer{
+  margin-bottom: 0;
+}
+
+.form-question_answer textarea.notes{
+  margin-top: 1em;
+}
+
+.checkbox-lz{
+  float: left; 
+  margin-left: 1em;
+  width: 75px;
+}
+
+.checkbox-lz.first{
+  margin-left: 0;
+}
+
