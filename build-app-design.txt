@@ -53,13 +53,30 @@ open https://github.com/codebrew/backbone-rails
 Settlor.columns.map(&:name)
 `echo #{Settlor.columns.map{|x| "#{x.name}:#{x.type}"}.join(" ")} | pbcopy`
 
-./bin/rails g model Client id:integer full_legal_name:string born_at:datetime us_citizen:boolean marital_status:string alive:boolean has_special_needs:boolean created_at:datetime updated_at:datetime type:string children_status:string
+./bin/rails g model Client id:integer full_legal_name:string born_at:datetime us_citizen:boolean marital_status:string alive:boolean has_special_needs:boolean type:string settlor_id:integer
+
+./bin/rails g model Settlor id:integer full_legal_name:string born_at:datetime us_citizen:boolean marital_status:string alive:boolean has_special_needs:boolean type:string
+./bin/rails g model Spouse id:integer id:integer full_legal_name:string born_at:datetime us_citizen:boolean marital_status:string alive:boolean has_special_needs:boolean type:string settlor_id:integer
 
 echo -e "class Settlor < Client\nend" > app/models/settlor.rb
 echo -e "class Spouse < Client\nend" > app/models/spouse.rb
 
+./bin/rake db:migrate:redo db:migrate:status test:prepare VERSION=20130219221503
+./bin/rake db:migrate db:migrate:status test:prepare
+./bin/rake db:migrate:status
 
 
+`echo #{Alias.columns.map{|x| "#{x.name}:#{x.type}" unless %w{created_at updated_at}.include?(x.name)}.join(" ")} | pbcopy`
+./bin/rails g model Alias id:integer client_id:integer value:string type:string
+
+
+`echo #{Address.columns.map{|x| "#{x.name}:#{x.type}" unless %w{id created_at updated_at}.include?(x.name)}.join(" ")} | pbcopy`
+./bin/rails g model Address address_01:string address_02:string city:string state:string zip:string type:string
+./bin/rails g model ResidentialAddress address_01:string address_02:string city:string state:string zip:string
+./bin/rails g model MailingAddress address_01:string address_02:string city:string state:string zip:string
+
+echo -e "class ResidentialAddress < Address\nend" > app/models/residential_address.rb
+echo -e "class MailingAddress < Address\nend" > app/models/mailing_address.rb
 
 
 

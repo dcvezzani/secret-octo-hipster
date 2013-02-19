@@ -1,0 +1,2 @@
+class ResidentialAddress < Address
+end

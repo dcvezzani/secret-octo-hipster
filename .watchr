@@ -17,3 +17,5 @@ watch("app/(.*/.*).rb") do |match|
   run_spec  %{spec/#{match[1]}_spec.rb}
 end
 
+system "bundle exec rspec"
+
