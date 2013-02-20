@@ -55,11 +55,13 @@ Settlor.columns.map(&:name)
 
 ./bin/rails g model Client id:integer full_legal_name:string born_at:datetime us_citizen:boolean marital_status:string alive:boolean has_special_needs:boolean type:string settlor_id:integer
 
-./bin/rails g model Settlor id:integer full_legal_name:string born_at:datetime us_citizen:boolean marital_status:string alive:boolean has_special_needs:boolean type:string
-./bin/rails g model Spouse id:integer id:integer full_legal_name:string born_at:datetime us_citizen:boolean marital_status:string alive:boolean has_special_needs:boolean type:string settlor_id:integer
+./bin/rails g model Settlor id:integer full_legal_name:string born_at:datetime us_citizen:boolean marital_status:string type:string
+./bin/rails g model Spouse id:integer id:integer full_legal_name:string born_at:datetime us_citizen:boolean marital_status:string type:string settlor_id:integer
+./bin/rails g model Child id:integer full_legal_name:string born_at:datetime alive:boolean has_special_needs:boolean type:string
 
 echo -e "class Settlor < Client\nend" > app/models/settlor.rb
 echo -e "class Spouse < Client\nend" > app/models/spouse.rb
+echo -e "class Child < Client\nend" > app/models/child.rb
 
 ./bin/rake db:migrate:redo db:migrate:status test:prepare VERSION=20130219221503
 ./bin/rake db:migrate db:migrate:status test:prepare
@@ -78,7 +80,30 @@ echo -e "class Spouse < Client\nend" > app/models/spouse.rb
 echo -e "class ResidentialAddress < Address\nend" > app/models/residential_address.rb
 echo -e "class MailingAddress < Address\nend" > app/models/mailing_address.rb
 
+./bin/rake db:migrate:redo db:migrate:status test:prepare VERSION=20130219225113
 
+
+ResidentialAddress.count
+a = ResidentialAddress.first
+a = ResidentialAddress.create
+a.settlor = Settlor.create(full_legal_name: "bbb")
+a.settlor = Settlor.create(full_legal_name: "asdf")
+a.tenants
+
+
+settlor = Settlor.create
+settlor.spouse = Spouse.create
+settlor.children << Child.create
+settlor.children << Child.create
+settlor.children << Child.create
+settlor.children << Child.create
+
+settlor.update_attributes(residential_address: ResidentialAddress.create)
+settlor.spouse.update_attributes(residential_address: settlor.residential_address)
+settlor.children.each{|x| x.update_attributes(residential_address: settlor.residential_address)}
+
+ResidentialAddress.count
+ResidentialAddress.first.tenants
 
 # ===== ARCHIVE
 

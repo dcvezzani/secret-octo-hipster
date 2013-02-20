@@ -12,6 +12,10 @@ class CreateClients < ActiveRecord::Migration
       t.string :contact_phone_number
       t.string :contact_email_address
       t.integer :settlor_id
+      t.integer :settlor_parent_id
+      t.integer :spouse_parent_id
+      t.integer :residential_address_id
+      t.integer :mailing_address_id
 
       t.timestamps
     end

@@ -53,6 +53,20 @@ Spork.prefork do
     # include any custom matchers here
     # config.extend ControllerMacros, :type => :controller
     # config.include(MyRspecCustomMatcher)
+
+    # https://github.com/bmabey/database_cleaner
+    # config.before(:suite) do
+    #   DatabaseCleaner.strategy = :transaction
+    #   DatabaseCleaner.clean_with(:truncation)
+    # end
+
+    # config.before(:each) do
+    #   DatabaseCleaner.start
+    # end
+
+    # config.after(:each) do
+    #   DatabaseCleaner.clean
+    # end    
   end
 end
 
@@ -60,6 +74,8 @@ Spork.each_run do
   # This code will be run each time you run your specs.
   require 'factory_girl_rails'
 
+  DatabaseCleaner.strategy = :truncation
+  DatabaseCleaner.clean
   ActiveSupport::Dependencies.clear
   ActiveRecord::Base.instantiate_observers
   FactoryGirl.factories.clear

@@ -1,9 +1,9 @@
 class Client < ActiveRecord::Base
-  attr_accessible :alive, :born_at, :full_legal_name, :has_special_needs, :id, :marital_status, :type, :us_citizen, :contact_phone_number, :contact_email_address
-  attr_accessible :spouse_id
+  attr_accessible :born_at, :full_legal_name, :contact_phone_number, :contact_email_address
+  attr_accessible :residential_address_id, :mailing_address_id, :residential_address, :mailing_address
 
   has_many :aliases
 
-  has_one :residential_address
-  has_one :mailing_address
+  belongs_to :residential_address
+  belongs_to :mailing_address
 end

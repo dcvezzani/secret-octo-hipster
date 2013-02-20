@@ -43,8 +43,12 @@ ActiveRecord::Schema.define(:version => 20130219225113) do
     t.string   "contact_phone_number"
     t.string   "contact_email_address"
     t.integer  "settlor_id"
-    t.datetime "created_at",            :null => false
-    t.datetime "updated_at",            :null => false
+    t.integer  "settlor_parent_id"
+    t.integer  "spouse_parent_id"
+    t.integer  "residential_address_id"
+    t.integer  "mailing_address_id"
+    t.datetime "created_at",             :null => false
+    t.datetime "updated_at",             :null => false
   end
 
   create_table "users", :force => true do |t|

@@ -2,16 +2,13 @@
 
 FactoryGirl.define do
   factory :spouse do
-    id 1
-    full_legal_name "MyString"
-    born_at "2013-02-19 14:15:11"
-    us_citizen false
-    marital_status "MyString"
-    alive false
-    has_special_needs false
-    created_at "2013-02-19 14:15:11"
-    updated_at "2013-02-19 14:15:11"
-    type ""
-    children_status "MyString"
+    FactoryGirl::Common.person_attrs(self)
+
+    #association :residential_address, factory: :residential_address, last_name: "Writely"
+    association :mailing_address
+
+    after(:create) do |spouse, evaluator|
+      FactoryGirl.create_list(:alias, rand(5), client: spouse)
+    end
   end
 end

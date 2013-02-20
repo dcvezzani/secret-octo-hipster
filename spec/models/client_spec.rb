@@ -25,14 +25,6 @@ describe Client do
     it "should include a date of birth" do
     lambda{@client.born_at}.should_not raise_error
     end
-
-    it "should include us citizenship" do
-    lambda{@client.us_citizen}.should_not raise_error
-    end
-
-    it "should include marital status" do
-    lambda{@client.marital_status}.should_not raise_error
-    end
   end
 
   describe "contact info" do
