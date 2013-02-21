@@ -22,4 +22,23 @@ describe Child do
       lambda{@child.alive}.should_not raise_error
     end
   end
+
+  describe "clean up for child" do
+    before(:each) do
+      @child = FactoryGirl.create(:child)
+    end
+
+    it "should cascade delete residential address" do
+      ResidentialAddress.joins{children}.count.should > 0
+      @child.destroy
+      ResidentialAddress.count.should == 0
+    end
+
+    it "should cascade delete mailing address" do
+      MailingAddress.joins{children}.count.should > 0
+      @child.destroy
+      MailingAddress.count.should == 0
+    end
+  end
+
 end

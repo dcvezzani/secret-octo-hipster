@@ -58,10 +58,14 @@ Settlor.columns.map(&:name)
 ./bin/rails g model Settlor id:integer full_legal_name:string born_at:datetime us_citizen:boolean marital_status:string type:string
 ./bin/rails g model Spouse id:integer id:integer full_legal_name:string born_at:datetime us_citizen:boolean marital_status:string type:string settlor_id:integer
 ./bin/rails g model Child id:integer full_legal_name:string born_at:datetime alive:boolean has_special_needs:boolean type:string
+./bin/rails g model JointChild id:integer full_legal_name:string born_at:datetime alive:boolean has_special_needs:boolean type:string
+./bin/rails g model PersonalChild id:integer full_legal_name:string born_at:datetime alive:boolean has_special_needs:boolean type:string
 
 echo -e "class Settlor < Client\nend" > app/models/settlor.rb
 echo -e "class Spouse < Client\nend" > app/models/spouse.rb
 echo -e "class Child < Client\nend" > app/models/child.rb
+echo -e "class JointChild < Child\nend" > app/models/joint_child.rb
+echo -e "class PersonalChild < Child\nend" > app/models/personal_child.rb
 
 ./bin/rake db:migrate:redo db:migrate:status test:prepare VERSION=20130219221503
 ./bin/rake db:migrate db:migrate:status test:prepare

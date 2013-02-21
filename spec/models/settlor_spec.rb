@@ -63,54 +63,6 @@ describe Settlor do
     end
   end
 
-  describe "clean up for spouse" do
-    before(:each) do
-      @spouse = FactoryGirl.create(:spouse)
-    end
-
-    it "should cascade delete aliases" do
-      Alias.joins{spouse}.count.should == @spouse.aliases.count
-      @spouse.destroy
-      Alias.count.should == 0
-    end
-
-    it "should cascade delete children" do
-      Child.joins{spouse_parent}.count.should == @spouse.children.count
-      @spouse.destroy
-      Child.count.should == 0
-    end
-
-    it "should cascade delete residential address" do
-      ResidentialAddress.joins{spouse}.count.should > 0
-      @spouse.destroy
-      ResidentialAddress.count.should == 0
-    end
-
-    it "should cascade delete mailing address" do
-      MailingAddress.joins{spouse}.count.should > 0
-      @spouse.destroy
-      MailingAddress.count.should == 0
-    end
-  end
-
-  describe "clean up for child" do
-    before(:each) do
-      @child = FactoryGirl.create(:child)
-    end
-
-    it "should cascade delete residential address" do
-      ResidentialAddress.joins{children}.count.should > 0
-      @child.destroy
-      ResidentialAddress.count.should == 0
-    end
-
-    it "should cascade delete mailing address" do
-      MailingAddress.joins{children}.count.should > 0
-      @child.destroy
-      MailingAddress.count.should == 0
-    end
-  end
-
   describe "simple test" do
     before(:each) do
       @settlor = Settlor.create
