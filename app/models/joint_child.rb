@@ -1,0 +1,2 @@
+class JointChild < Child
+end

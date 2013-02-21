@@ -24,48 +24,6 @@ describe Settlor do
   end
 
   describe "simple test" do
-    RSpec::Matchers.define :include_tenant do |expected_tenant|
-      match do |actual_tenants|
-        actual_tenants.include?(expected_tenant)
-      end
-    end
-    RSpec::Matchers.define :include_recipient do |expected_recipient|
-      match do |actual_recipients|
-        actual_recipients.include?(expected_recipient)
-      end
-    end
-    RSpec::Matchers.define :have_children_count do |expected|
-      match do |tenants|
-        @actual_children = tenants.select{|tenant| tenant.is_a?(Child)}.length
-        expected == @actual_children
-      end
-
-      failure_message_for_should do |actual|
-        "expected the number of children to be #{expected}, but there appear to be #{@actual_children} instead"
-      end
-    end
-    RSpec::Matchers.define :have_items_count do |expected, type=nil|
-      match do |actual_collection|
-        type = actual_collection.first.class if(type.nil? and actual_collection.length > 0 and !actual_collection.first.nil?)
-        @filtered_collection = actual_collection.select{|item| item.is_a?(type)}
-        @filtered_collection.length == expected
-      end
-
-      failure_message_for_should do |actual_collection|
-        "expected #{expected} #{type.name.pluralize.tableize.downcase.gsub(/_/, " ")} to be included in collection, but got #{@filtered_collection.length}"
-      end
-    end
-    RSpec::Matchers.define :have_item_with do |attr, expected|
-      match do |actual_collection|
-        @actual_item = actual_collection.find{|item| item.send(attr) == expected}
-        !@actual_item.nil?
-      end
-
-      failure_message_for_should do |actual_collection|
-        "expected #{actual_collection} to have an item whose #{attr} has a value of '#{expected}', but found none"
-      end
-    end
-
     before(:all) do
       @settlor = Settlor.create
       @settlor.spouse = Spouse.create
@@ -113,7 +71,7 @@ describe Settlor do
         ResidentialAddress.first.tenants.should include_tenant(@child)
       end
 
-      it "should have at least one child" do
+      it "should have 4 children" do
         ResidentialAddress.first.tenants.should have_children_count(4)
       end
     end
@@ -141,7 +99,7 @@ describe Settlor do
         MailingAddress.first.recipients.should include_recipient(@child)
       end
 
-      it "should have at least one child" do
+      it "should have 4 children" do
         MailingAddress.first.recipients.should have_children_count(4)
       end
     end
@@ -169,4 +127,20 @@ describe Settlor do
       end
     end
   end
+
+  describe "factories" do
+    it "should have more settlors than spouses, statistically speaking" do
+      @current_time = Time.now
+      @settlors = FactoryGirl.create_list(:settlor, 25)
+
+      Settlor.should have_more_entries_than(Spouse).after(@current_time)
+
+      ResidentialAddress.should have_more_entries_than(25).after(@current_time)
+      ResidentialAddress.should have_less_entries_than(100).after(@current_time)
+
+      MailingAddress.should have_more_entries_than(25).after(@current_time)
+      MailingAddress.should have_less_entries_than(100).after(@current_time)
+    end
+  end
+  
 end

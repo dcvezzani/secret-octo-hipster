@@ -2,11 +2,6 @@
 
 FactoryGirl.define do
   factory :child do
-    id 1
-    full_legal_name "MyString"
-    born_at "2013-02-19 16:19:03"
-    alive false
-    has_special_needs false
-    type ""
+    FactoryGirl::Common.person_attrs(self)
   end
 end

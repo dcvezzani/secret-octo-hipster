@@ -53,6 +53,7 @@ Spork.prefork do
     # include any custom matchers here
     # config.extend ControllerMacros, :type => :controller
     # config.include(MyRspecCustomMatcher)
+    config.include ClientHelper, :type => :model
 
     # https://github.com/bmabey/database_cleaner
     # config.before(:suite) do
@@ -85,3 +86,168 @@ Spork.each_run do
     require file
   end
 end
+
+=begin
+Main documentation:
+https://github.com/rspec/rspec-rails
+
+A couple tutorials: 
+http://jimmyzimmerman.com/blog/2007/11/simple-tutorials-for-learning-bdd-and-rspec.html
+http://www.lukeredpath.co.uk/blog/developing-a-rails-model-using-bdd-and-rspec-part-1.html
+
+Using FactoryGirl; where to place in spec_helper bootstrapped with spork:
+http://stackoverflow.com/questions/6978082/factory-girl-associations-with-spork-discrepancy
+http://railscasts.com/episodes/158-factories-not-fixtures?view=asciicast
+https://github.com/thoughtbot/factory_girl/blob/master/GETTING_STARTED.md
+https://github.com/thoughtbot/factory_girl/tree/1.3.x
+
+Using and configuring watchr:
+http://www.rubyinside.com/how-to-rails-3-and-rspec-2-4336.html
+
+Testing for redirection:
+http://stackoverflow.com/questions/6139898/rspec-redirect-to-show-action
+# e.g., response.should redirect_to(post_path(assigns[:post])
+
+How To: Controllers and Views tests with Rails 3 (and rspec): 
+https://github.com/plataformatec/devise/wiki/How-To%3a-Controllers-and-Views-tests-with-Rails-3-%28and-rspec%29
+
+Using and configuring 'steak' gem:
+http://www.ruby-on-rails-outsourcing.com/articles/2011/06/23/getting-started-with-steak/
+http://jeffkreeftmeijer.com/2010/steak-because-cucumber-is-for-vegetarians/
+https://github.com/cavalle/steak
+
+What generators are available to rspec?
+http://stackoverflow.com/questions/11062869/list-of-rspecs-generators
+
+    controller
+    helper
+    install
+    integration
+    mailer
+    model
+    observer
+    scaffold
+    view
+
+rails g helper ClientMessages
+
+After adding devise, my tests started breaking.  What gives?
+http://stackoverflow.com/questions/9508707/rail3-rspec-devise-rspec-controller-test-fails-unless-i-add-a-dummy-subject-cur
+
+puts Faker::Name.singleton_methods(false)
+name
+first_name
+last_name
+prefix
+suffix
+title
+
+puts Faker::Internet.singleton_methods(false)
+email
+free_email
+safe_email
+user_name
+domain_name
+fix_umlauts
+domain_word
+domain_suffix
+ip_v4_address
+ip_v6_address
+url
+
+puts Faker::Company.singleton_methods(false)
+name
+suffix
+catch_phrase
+bs
+
+puts Faker::Address.singleton_methods(false)
+city
+street_name
+street_address
+secondary_address
+building_number
+zip_code
+zip
+postcode
+street_suffix
+city_suffix
+city_prefix
+state_abbr
+state
+country
+latitude
+longitude
+
+puts Faker::Lorem.singleton_methods(false)
+word
+words
+characters
+sentence
+sentences
+paragraph
+paragraphs
+resolve
+
+puts Faker::PhoneNumber.singleton_methods(false)
+phone_number
+cell_phone
+
+
+Generating test data for development:
+http://objectliteral.blogspot.com/2009/07/make-faker-work-with-factory-girl.html
+
+=== controllers
+%s/\[message\]/[@message]/g
+%s/(message)/(@message)/g
+%s/=> message./=> @message./g
+%s/\n\s\+message = Message.create! valid_attributes\n/\r/g
+
+  login_user
+
+  before(:each) do
+    @attachment = FactoryGirl.create(:attachment)
+    #attachments = FactoryGirl.create_list(:attachment, 2)
+  end
+
+    FactoryGirl.attributes_for(:attachment).select{|k,v| !%w{id created_at updated_at}.include?(k)}
+
+    {"warden.user.user.key" => session["warden.user.user.key"]}
+
+=== views (acceptance)
+    user = FactoryGirl.create(:user)
+    messages = FactoryGirl.create_list(:message, 2)
+    visit '/messages/index_by_categories'
+
+    login_user
+
+    #puts page.html
+
+    page.should have_selector("table.client_messages>tr>th", :text => "Sender email".to_s, :count => 1)
+    page.should have_selector("table.client_messages>tr>td", :text => "bob@mail.com".to_s, :count => 2)
+
+=== models
+  it { should have_many(:associate_profiles).dependent(:destroy) }
+
+  it { should validate_presence_of(:territory) }
+  it { should validate_presence_of(:name) }
+  it { should validate_presence_of(:title) }
+  it { should validate_presence_of(:email) }
+
+=== factories
+  factory :client_message do
+    ...
+    type "ClientMessage"
+  end
+
+  factory :associate do
+    name Faker::Name.name
+    title "Contract Attorney"
+    email Faker::Internet.email
+    calendar Faker::Internet.url
+    dropbox Faker::Internet.url
+  end
+
+=end
+
+
