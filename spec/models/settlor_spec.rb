@@ -15,16 +15,104 @@ describe Settlor do
 
   describe "basic info" do
     it "should include us citizenship" do
-    lambda{@settlor.us_citizen}.should_not raise_error
+      lambda{@settlor.us_citizen}.should_not raise_error
     end
 
     it "should include marital status" do
-    lambda{@settlor.marital_status}.should_not raise_error
+      lambda{@settlor.marital_status}.should_not raise_error
+    end
+  end
+
+  describe "clean up for settlor" do
+    before(:each) do
+      @settlor = FactoryGirl.create(:settlor)
+    end
+
+    it "should cascade delete aliases" do
+      Alias.joins{settlor}.count.should == @settlor.aliases.count
+      @settlor.destroy
+      Alias.count.should == 0
+    end
+
+    it "should cascade delete children" do
+      Child.joins{settlor_parent}.count.should == @settlor.children.count
+      @settlor.destroy
+      Child.count.should == 0
+    end
+
+    it "should cascade delete spouse" do
+      if(Spouse.count > 0)
+        Spouse.count.should == 1
+        Spouse.first.should == @settlor.spouse
+      end
+
+      @settlor.destroy
+      Spouse.count.should == 0
+    end
+
+    it "should cascade delete residential address" do
+      ResidentialAddress.joins{settlor}.count.should > 0
+      @settlor.destroy
+      ResidentialAddress.count.should == 0
+    end
+
+    it "should cascade delete mailing address" do
+      MailingAddress.joins{settlor}.count.should > 0
+      @settlor.destroy
+      MailingAddress.count.should == 0
+    end
+  end
+
+  describe "clean up for spouse" do
+    before(:each) do
+      @spouse = FactoryGirl.create(:spouse)
+    end
+
+    it "should cascade delete aliases" do
+      Alias.joins{spouse}.count.should == @spouse.aliases.count
+      @spouse.destroy
+      Alias.count.should == 0
+    end
+
+    it "should cascade delete children" do
+      Child.joins{spouse_parent}.count.should == @spouse.children.count
+      @spouse.destroy
+      Child.count.should == 0
+    end
+
+    it "should cascade delete residential address" do
+      ResidentialAddress.joins{spouse}.count.should > 0
+      @spouse.destroy
+      ResidentialAddress.count.should == 0
+    end
+
+    it "should cascade delete mailing address" do
+      MailingAddress.joins{spouse}.count.should > 0
+      @spouse.destroy
+      MailingAddress.count.should == 0
+    end
+  end
+
+  describe "clean up for child" do
+    before(:each) do
+      @child = FactoryGirl.create(:child)
+    end
+
+    it "should cascade delete residential address" do
+      ResidentialAddress.joins{children}.count.should > 0
+      @child.destroy
+      ResidentialAddress.count.should == 0
+    end
+
+    it "should cascade delete mailing address" do
+      MailingAddress.joins{children}.count.should > 0
+      @child.destroy
+      MailingAddress.count.should == 0
     end
   end
 
   describe "simple test" do
-    before(:all) do
+    before(:each) do
       @settlor = Settlor.create
       @settlor.spouse = Spouse.create
       @settlor.children << Child.create
@@ -46,15 +134,13 @@ describe Settlor do
 
       @settlor.spouse.aliases << Alias.create(value: "bbb")
       @settlor.spouse.aliases << Alias.create
+
+      @settlor = Settlor.first
+      @spouse = @settlor.spouse
+      @child = @settlor.children.first
     end
 
     describe "the residential address" do
-      before(:each) do
-        @settlor = Settlor.first
-        @spouse = @settlor.spouse
-        @child = @settlor.children.first
-      end
-
       it "should be used for everyone (only one exists)" do
         ResidentialAddress.count.should == 1
       end
@@ -77,12 +163,6 @@ describe Settlor do
     end
 
     describe "the mailing address" do
-      before(:each) do
-        @settlor = Settlor.first
-        @spouse = @settlor.spouse
-        @child = @settlor.children.first
-      end
-
       it "should be used for everyone (only one exists)" do
         MailingAddress.count.should == 1
       end
@@ -105,11 +185,6 @@ describe Settlor do
     end
 
     describe "aliases" do
-      before(:each) do
-        @settlor = Settlor.first
-        @spouse = @settlor.spouse
-      end
-
       it "should exist for settlor" do
         @settlor.aliases.should have_items_count(3)
       end
@@ -129,17 +204,27 @@ describe Settlor do
   end
 
   describe "factories" do
-    it "should have more settlors than spouses, statistically speaking" do
+    before(:all) do
       @current_time = Time.now
       @settlors = FactoryGirl.create_list(:settlor, 25)
+    end
 
-      Settlor.should have_more_entries_than(Spouse).after(@current_time)
+    after(:all) do
+      Settlor.destroy_all(["id in (?)", @settlors.map(&:id)])
+    end
 
-      ResidentialAddress.should have_more_entries_than(25).after(@current_time)
-      ResidentialAddress.should have_less_entries_than(100).after(@current_time)
+    it "should have more settlors than spouses, statistically speaking" do
+      Settlor.should have_more_entries_than(Spouse)#.after(@current_time)
+    end
 
-      MailingAddress.should have_more_entries_than(25).after(@current_time)
-      MailingAddress.should have_less_entries_than(100).after(@current_time)
+    it "should have more residential addresses than settlors, but not more than 100" do
+      ResidentialAddress.should have_more_entries_than(25)
+      ResidentialAddress.should have_less_entries_than(100)
+    end
+
+    it "should have more mailing addresses than settlors, but not more than 100" do
+      MailingAddress.should have_more_entries_than(25)#.after(@current_time)
+      MailingAddress.should have_less_entries_than(100)#.after(@current_time)
     end
   end
   

@@ -44,14 +44,14 @@ module ClientHelper
     RSpec::Matchers.define :have_more_entries_than do |right_obj|
       match do |left_obj|
         @left_obj = left_obj
-        @left_obj_size = left_obj.where{created_at > my{@current_time}}.size
+        @left_obj_size = ((@current_time) ? left_obj.where{created_at > my{@current_time}} : left_obj).count
 
         if(right_obj.is_a?(Integer))
           @right_obj_size = right_obj
 
         else
         #if(right_obj.ancestors.include?(ActiveRecord::Base))
-          @right_obj_size = right_obj.where{created_at > my{@current_time}}.size
+          @right_obj_size = ((@current_time) ? right_obj.where{created_at > my{@current_time}} : right_obj).count
 
         end
 
@@ -75,14 +75,14 @@ module ClientHelper
     RSpec::Matchers.define :have_less_entries_than do |right_obj|
       match do |left_obj|
         @left_obj = left_obj
-        @left_obj_size = left_obj.where{created_at > my{@current_time}}.size
+        @left_obj_size = ((@current_time) ? left_obj.where{created_at > my{@current_time}} : left_obj).count
 
         if(right_obj.is_a?(Integer))
           @right_obj_size = right_obj
 
         else
         #if(right_obj.ancestors.include?(ActiveRecord::Base))
-          @right_obj_size = right_obj.where{created_at > my{@current_time}}.size
+          @right_obj_size = ((@current_time) ? right_obj.where{created_at > my{@current_time}} : right_obj).count
 
         end
 
@@ -106,7 +106,7 @@ module ClientHelper
     RSpec::Matchers.define :have_an_entries_count_of do |expected_count|
       match do |obj|
         @obj = obj
-        @obj_size = obj.where{created_at > my{@current_time}}.size
+        @obj_size = ((@current_time) ? obj.where{created_at > my{@current_time}} : obj).count
         (@obj_size == expected_count)
       end
 

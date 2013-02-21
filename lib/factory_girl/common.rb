@@ -23,11 +23,17 @@ module Common
 
         elsif(client.is_a?(Child))
           #debugger if(client.settlor_parent.nil?)
-          residential_address = ((client.settlor_parent) ? client.settlor_parent : client.spouse_parent).residential_address
+          if(client.settlor_parent or client.spouse_parent)
+            residential_address = ((client.settlor_parent) ? client.settlor_parent : client.spouse_parent).residential_address
+          else
+            residential_address = FactoryGirl.create(:residential_address)
+          end
+
           client.update_attributes(residential_address: residential_address)
           
         elsif(client.is_a?(Spouse))
-          client.update_attributes(residential_address: client.settlor.residential_address)
+          residential_address = ((client.settlor) ? client.settlor.residential_address : FactoryGirl.create(:residential_address))
+          client.update_attributes(residential_address: residential_address)
         end
 
         mailing_addr_same_as_settlor = true#lambda{(rand(1000) < 800)}.call()
@@ -38,11 +44,17 @@ module Common
 
         elsif(client.is_a?(Child))
           #debugger if(client.settlor_parent.nil?)
-          mailing_address = ((client.settlor_parent) ? client.settlor_parent : client.spouse_parent).mailing_address
+          if(client.settlor_parent or client.spouse_parent)
+            mailing_address = ((client.settlor_parent) ? client.settlor_parent : client.spouse_parent).mailing_address
+          else
+            mailing_address = FactoryGirl.create(:mailing_address)
+          end
+
           client.update_attributes(mailing_address: mailing_address)
           
         elsif(client.is_a?(Spouse))
-          client.update_attributes(mailing_address: client.settlor.mailing_address)
+          mailing_address = ((client.settlor) ? client.settlor.mailing_address : FactoryGirl.create(:mailing_address))
+          client.update_attributes(mailing_address: mailing_address)
         end
         
       end

@@ -24,8 +24,4 @@ describe Address do
   it "should have a zip code" do
     lambda{@address.zip}.should_not raise_error
   end
-
-  it "should have tenants" do
-    lambda{@address.tenants}.should_not raise_error
-  end
 end
