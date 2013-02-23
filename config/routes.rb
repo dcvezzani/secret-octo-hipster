@@ -1,4 +1,13 @@
 Clf005::Application.routes.draw do
+
+
+  resources :settlors do
+    resources :aliases
+    resources :residential_addresses
+    resources :mailing_addresses
+    resources :vacation_addresses
+  end
+
   get "welcome/index"
   get "welcome/wizard", as: :wizard_welcome
   get "welcome/wizard_bar", as: :wizard_bar_welcome

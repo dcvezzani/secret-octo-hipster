@@ -1,0 +1,92 @@
+<%= form_for(@settlor, html: {class: "form-horizontal"}) do |f| %>
+  <% if @settlor.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@settlor.errors.count, "error") %> prohibited this settlor from being saved:</h2>
+
+      <ul>
+      <% @settlor.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="control-group">
+    <%= f.label :full_legal_name, class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :full_legal_name %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= f.label :born_at, class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :born_at, placeholder: "Select date of birth", class: "wizard-calendar" %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= label_tag nil, "U.S. citizen?", class: "control-label" %>
+    <div class="controls">
+      <%= f.label :us_citizen_true, class: "radio inline" do %>
+        <%= f.radio_button :us_citizen, :true %> Yes
+      <% end %>
+      <%= f.label :us_citizen_false, class: "radio inline" do %>
+        <%= f.radio_button :us_citizen, :false %> No
+      <% end %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= label_tag nil, "Marrital status?", class: "control-label" %>
+    <div class="controls">
+      <%= f.label :marital_status_married, class: "radio inline" do %>
+        <%= f.radio_button :marital_status, :married %> Married
+      <% end %>
+      <%= f.label :marital_status_single, class: "radio inline" do %>
+        <%= f.radio_button :marital_status, :single %> Single
+      <% end %>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <%= label_tag nil, "Has children?", class: "control-label" %>
+    <div class="controls">
+      <%= f.label :has_children_true, class: "radio inline" do %>
+        <%= f.radio_button :has_children, :true %> Yes
+      <% end %>
+      <%= f.label :has_children_false, class: "radio inline" do %>
+        <%= f.radio_button :has_children, :false %> No
+      <% end %>
+    </div>
+  </div>
+
+  <div class="control-group" style="display: none; ">
+    <%#= f.label :marital_status, class: "control-label" %>
+    <div class="controls">
+      <%#= f.text_field :marital_status %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :contact_phone_number, class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :contact_phone_number %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :contact_email_address, class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :contact_email_address %>
+    </div>
+  </div>
+  <div class="control-group">
+    <div class="controls">
+      <%= f.submit nil, class: "btn" %>
+    </div>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  Clf005.Wizard.Widgets.calendar();
+</script>
+

@@ -1,0 +1,29 @@
+<h1>Listing aliases</h1>
+
+<table class="table table-striped">
+  <tr>
+    <th>Client</th>
+    <th>Value</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% weed_patch = plant_weed_patch("aliases", [@client, :alias]) %>
+<% @aliases.each do |alias_item| %>
+  <tr>
+    <td><%= alias_item.client_id %></td>
+    <td><%= alias_item.value %></td>
+
+    <%= weed_patch.varieties([:show, :edit, :destroy], [@client, alias_item]) %>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= weed_patch.varieties([:add]) %>
+
+<script type="text/javascript">
+  alias_patch.bloom("index");
+</script>

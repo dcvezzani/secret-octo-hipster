@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Full legal name:</b>
+  <%= @settlor.full_legal_name %>
+</p>
+
+<p>
+  <b>Born at:</b>
+  <%= @settlor.born_at %>
+</p>
+
+<p>
+  <b>Us citizen:</b>
+  <%= @settlor.us_citizen %>
+</p>
+
+<p>
+  <b>Marital status:</b>
+  <%= @settlor.marital_status %>
+</p>
+
+<p>
+  <b>Contact phone number:</b>
+  <%= @settlor.contact_phone_number %>
+</p>
+
+<p>
+  <b>Contact email address:</b>
+  <%= @settlor.contact_email_address %>
+</p>
+
+
+<%= link_to 'Edit', edit_settlor_path(@settlor) %> |
+<%= link_to 'Back', settlors_path %>

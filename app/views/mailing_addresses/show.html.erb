@@ -1,0 +1,37 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Address 01:</b>
+  <%= @mailing_address.address_01 %>
+</p>
+
+<p>
+  <b>Address 02:</b>
+  <%= @mailing_address.address_02 %>
+</p>
+
+<p>
+  <b>City:</b>
+  <%= @mailing_address.city %>
+</p>
+
+<p>
+  <b>State:</b>
+  <%= @mailing_address.state %>
+</p>
+
+<p>
+  <b>Zip:</b>
+  <%= @mailing_address.zip %>
+</p>
+
+<ul class="wp-actions-list">
+  <li><%= link_to_iconable 'Edit', [:edit, @client, @mailing_address], class: "edit-item show-text" %></li>
+  <li><%= link_to_iconable 'Back', [@client, :mailing_addresses], class: "index-item show-text" %></li>
+</ul>
+
+<script type="text/javascript">
+  mailing_address_patch.bloom("show");
+</script>
+
+

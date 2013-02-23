@@ -1,0 +1,54 @@
+<%= form_for([@client, @mailing_address], html: {"data-load" => "#mailing_addresses", class: "form-horizontal"}) do |f| %>
+  <% if @mailing_address.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@mailing_address.errors.count, "error") %> prohibited this mailing_address from being saved:</h2>
+
+      <ul>
+      <% @mailing_address.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="control-group">
+    <%= f.label :address_01, class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :address_01 %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :address_02, class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :address_02 %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :city, class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :city %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :state, class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :state %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :zip, class: "control-label" %>
+    <div class="controls">
+      <%= f.text_field :zip %>
+    </div>
+  </div>
+  <div class="actions">
+    <div class="controls">
+      <%= f.submit nil, class: "btn" %>
+    </div>
+  </div>
+<% end %>
+
+<script type="text/javascript">
+  mailing_address_patch.bloom("form");
+</script>
+

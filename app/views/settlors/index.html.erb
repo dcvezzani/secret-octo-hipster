@@ -1,0 +1,45 @@
+<h1>Listing settlors</h1>
+
+<table class="table table-striped">
+  <tr>
+    <th>Full legal name</th>
+    <th>Born at</th>
+    <th>Us citizen</th>
+    <th>Marital status</th>
+    <th>Contact phone number</th>
+    <th>Contact email address</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @settlors.each do |settlor| %>
+  <tr>
+    <td><%= settlor.full_legal_name %></td>
+    <td><%= settlor.born_at %></td>
+    <td><%= settlor.us_citizen %></td>
+    <td><%= settlor.marital_status %></td>
+    <td><%= settlor.contact_phone_number %></td>
+    <td><%= settlor.contact_email_address %></td>
+    <td>
+      <%= link_to settlor, title: "Show" do %>
+        <i class="icon-search"></i>
+      <% end %>
+    </td>
+    <td>
+      <%= link_to edit_settlor_path(settlor), title: "Edit" do %>
+        <i class="icon-pencil"></i>
+      <% end %>
+    </td>
+    <td>
+      <%= link_to settlor, method: :delete, data: { confirm: 'Are you sure?' }, title: "Destroy" do %>
+        <i class="icon-trash"></i>
+      <% end %>
+    </td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Settlor', new_settlor_path %>

@@ -1,0 +1,36 @@
+<h1>Listing mailing_addresses</h1>
+
+<table class="table table-striped">
+  <tr>
+    <th>Address 01</th>
+    <th>Address 02</th>
+    <th>City</th>
+    <th>State</th>
+    <th>Zip</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% mailing_address_patch = plant_weed_patch("mailing_addresses", [@client, :mailing_address]) %>
+<% @mailing_addresses.each do |mailing_address| %>
+  <tr>
+    <td><%= mailing_address.address_01 %></td>
+    <td><%= mailing_address.address_02 %></td>
+    <td><%= mailing_address.city %></td>
+    <td><%= mailing_address.state %></td>
+    <td><%= mailing_address.zip %></td>
+
+    <%= mailing_address_patch.varieties([:show, :edit, :destroy], [@client, mailing_address]) %>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to_iconable 'Add Mailing address', [:new, @client, :mailing_address], class: "new-item show-text" %>
+
+<script type="text/javascript">
+  mailing_address_patch.bloom("index");
+</script>
+

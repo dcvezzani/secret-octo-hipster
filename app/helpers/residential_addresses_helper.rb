@@ -1,0 +1,2 @@
+module ResidentialAddressesHelper
+end

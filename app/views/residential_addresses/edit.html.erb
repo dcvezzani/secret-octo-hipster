@@ -1,0 +1,13 @@
+<h1>Editing residential_address</h1>
+
+<%= render 'form' %>
+
+<ul class="wp-actions-list">
+  <li><%= link_to_iconable 'Show', [@client, @residential_address], class: "show-item show-text" %></li>
+  <li><%= link_to_iconable 'Back', [@client, :residential_addresses], class: "index-item show-text" %></li>
+</ul>
+
+<script type="text/javascript">
+  residential_address_patch.bloom("edit");
+</script>
+

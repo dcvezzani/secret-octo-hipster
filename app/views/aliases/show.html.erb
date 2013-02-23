@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Client:</b>
+  <%= @alias.client_id %>
+</p>
+
+<p>
+  <b>Value:</b>
+  <%= @alias.value %>
+</p>
+
+
+<%= link_to 'Edit', edit_alias_path(@alias) %> |
+<%= link_to 'Back', aliases_path %>

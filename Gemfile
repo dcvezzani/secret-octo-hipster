@@ -89,6 +89,8 @@ end
 group :development, :test do
   gem 'database_cleaner'
 
+  #gem 'nifty-generators', git: 'http://github.com/dcvezzani/nifty-generators.git'
+
   #gem "rspec-rails", ">= 2.10.1"
   gem "rspec-rails", ">= 2.12.0"
   gem "faker"
@@ -114,3 +116,5 @@ group :development, :test do
   gem 'cmess', git: 'http://github.com/fac/cmess.git'
   gem 'nokogiri'
 end
+
+gem "mocha", :group => :test

@@ -1,3 +1,16 @@
+# ===== Thu Feb 21 13:52:20 PST 2013
+
+./bin/rails generate scaffold Settlor full_legal_name:string born_at:datetime us_citizen:boolean marital_status:string contact_phone_number:string contact_email_address:string
+./bin/rails generate scaffold Alias client_id:integer value:string
+./bin/rails g scaffold ResidentialAddress address_01:string address_02:string city:string state:string zip:string
+./bin/rails g scaffold MailingAddress address_01:string address_02:string city:string state:string zip:string
+ 
+
+mvim -p app/views/mailing_addresses/index.html.erb app/views/mailing_addresses/edit.html.erb app/views/mailing_addresses/show.html.erb app/views/mailing_addresses/new.html.erb app/views/mailing_addresses/_form.html.erb
+ 
+
+# ===== Wed Feb 20
+
 BUNDLE_GEMFILE=/Users/davidvezzani/rails-app/clean-start/Gemfile bundle exec rails new clf-004 -T
 git clone -b master clean-start clf-004
 
@@ -108,6 +121,7 @@ settlor.children.each{|x| x.update_attributes(residential_address: settlor.resid
 
 ResidentialAddress.count
 ResidentialAddress.first.tenants
+
 
 # ===== ARCHIVE
 

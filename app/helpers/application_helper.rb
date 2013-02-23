@@ -4,23 +4,23 @@ module ApplicationHelper
     "javascript: xvoid();"
   end
 
-  def form_type(obj)
-    if(obj.new_record?)
-      "new-form new-#{obj.class.name.downcase}"
-    else
-      "edit-form edit-#{obj.class.name.downcase}"
-    end
-  end
+  # def form_type(obj)
+  #   if(obj.new_record?)
+  #     "new-form new-#{obj.class.name.downcase}"
+  #   else
+  #     "edit-form edit-#{obj.class.name.downcase}"
+  #   end
+  # end
 
-  def form_id(obj)
-    if(obj.new_record?)
-      "new-#{obj.class.name.downcase}"
-    else
-      "edit-#{obj.class.name.downcase}"
-    end
-  end
+  # def form_id(obj)
+  #   if(obj.new_record?)
+  #     "new-#{obj.class.name.downcase}"
+  #   else
+  #     "edit-#{obj.class.name.downcase}"
+  #   end
+  # end
 
-  def backbone_attr(name)
-    "<%= #{name} %>"
-  end
+  # def backbone_attr(name)
+  #   "<%= #{name} %>"
+  # end
 end

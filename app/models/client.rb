@@ -6,6 +6,7 @@ class Client < ActiveRecord::Base
 
   belongs_to :residential_address
   belongs_to :mailing_address
+  belongs_to :vacation_address
 
   after_destroy :remove_orphaned_residential_addresses, :remove_orphaned_mailing_addresses
 

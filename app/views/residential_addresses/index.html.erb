@@ -1,0 +1,36 @@
+<h1>Listing residential_addresses</h1>
+
+<table class="table table-striped">
+  <tr>
+    <th>Address 01</th>
+    <th>Address 02</th>
+    <th>City</th>
+    <th>State</th>
+    <th>Zip</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% residential_address_patch = plant_weed_patch("residential_addresses", [@client, :residential_address]) %>
+<% @residential_addresses.each do |residential_address| %>
+  <tr>
+    <td><%= residential_address.address_01 %></td>
+    <td><%= residential_address.address_02 %></td>
+    <td><%= residential_address.city %></td>
+    <td><%= residential_address.state %></td>
+    <td><%= residential_address.zip %></td>
+
+    <%= residential_address_patch.varieties([:show, :edit, :destroy], [@client, residential_address]) %>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to_iconable 'Add Residential address', [:new, @client, :residential_address], class: "new-item show-text" %>
+
+<script type="text/javascript">
+  residential_address_patch.bloom("index");
+</script>
+

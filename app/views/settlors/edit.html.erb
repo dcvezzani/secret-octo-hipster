@@ -1,0 +1,35 @@
+<div class="container">
+
+<h1>Editing settlor</h1>
+
+<%= render 'settlors/form' %>
+
+<ul class="wp-actions-list">
+  <li><%= link_to_iconable 'Show', @settlor, class: "show-item show-text" %></li>
+  <li><%= link_to_iconable 'Back', settlors_path, class: "index-item show-text" %></li>
+</ul>
+
+
+<p></p>
+<%= link_to "Aliases", [@settlor, :aliases], class: "btn btn-aliases btn-autoload", "data-load" => "#aliases" %>
+<div id="aliases" class="wp-section"></div>
+
+
+<p></p>
+<%= link_to "Residential Address", [@settlor, :residential_addresses], class: "btn btn-residential_addresses btn-autoload", "data-load" => "#residential_addresses" %>
+<div id="residential_addresses" class="wp-section"></div>
+
+
+<p></p>
+<%= link_to "Mailing Address", [@settlor, :mailing_addresses], class: "btn btn-mailing_addresses btn-autoload", "data-load" => "#mailing_addresses" %>
+<div id="mailing_addresses" class="wp-section"></div>
+
+
+</div>
+
+<script type="text/javascript">
+  var alias_patch = new WeedPatch("aliases");
+  var residential_address_patch = new WeedPatch("residential_addresses");
+  var mailing_address_patch = new WeedPatch("mailing_addresses");
+</script>
+
